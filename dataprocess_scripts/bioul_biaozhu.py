@@ -20,7 +20,7 @@ from dataprocess_scripts.meta_class import Biaozhu
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
+logger.setLevel(logging.DEBUG)
 
 class bioul_biaozhu(Biaozhu):
     def __init__(self, pth: str, yuzhi_ratio: float):
@@ -54,6 +54,7 @@ class bioul_biaozhu_pkuseg(bioul_biaozhu):
     def __init__(self, pth: str, yuzhi_ratio: float):
         super(bioul_biaozhu_pkuseg, self).__init__(pth, yuzhi_ratio)
         self.tokenizer =  pkuseg.pkuseg(model_name='news')
+
     def tokenize(self, source: str):
         return self.tokenizer.cut(source)
 
@@ -61,7 +62,20 @@ class bioul_biaozhu_pkuseg(bioul_biaozhu):
 if __name__ == '__main__':
     pth = '../data/news_data_09_29.json'
     a = bioul_biaozhu_jieba(pth, 0.7)
-    a.run('./jieba.json')
+    a.run('./jieba_0.7.json')
 
-    # b= bioul_biaozhu_pkuseg(pth, 0.7)
-    # b.run('./pkuseg.json')
+    b= bioul_biaozhu_pkuseg(pth, 0.7)
+    b.run('./pkuseg_0.7.json')
+
+    a = bioul_biaozhu_jieba(pth, 0.9)
+    a.run('./jieba_0.9.json')
+
+    b= bioul_biaozhu_pkuseg(pth, 0.9)
+    b.run('./pkuseg_0.9.json')
+
+    a = bioul_biaozhu_jieba(pth, 1)
+    a.run('./jieba_1.json')
+
+    b= bioul_biaozhu_pkuseg(pth, 1)
+    b.run('./pkuseg_1.json')
+

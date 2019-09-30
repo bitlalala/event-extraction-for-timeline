@@ -127,11 +127,11 @@
 #       print(a, end="")
 from dataprocess_scripts.myutils import show_extract_info, compare_2_dct_lst
 import json
-with open('../dataprocess_scripts/pkuseg.json') as f:
+with open('../dataprocess_scripts/pkuseg_0.9.json') as f:
     dct_lsta = json.load(f)
 # show_extract_info(dct_lst)
 
-with open('../dataprocess_scripts/jieba.json') as f:
+with open('../dataprocess_scripts/jieba_0.9.json') as f:
     dct_lstb = json.load(f)
 # show_extract_info(dct_lst)
 compare_2_dct_lst(dct_lsta, dct_lstb)

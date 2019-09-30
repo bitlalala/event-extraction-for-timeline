@@ -11,7 +11,6 @@ import os
 import collections
 from typing import List, Dict, Tuple
 import logging
-from orderedset import OrderedSet
 from dataprocess_scripts.myutils import get_dct_from_file
 
 logger = logging.getLogger(__name__)
@@ -31,7 +30,7 @@ class Biaozhu():
         for dct in tqdm(get_dct_from_file(self.pth), desc="打标签中~  "):
             abstract = dct['abstract'].strip()
             title = dct['title'].strip()
-            target_lst = list(OrderedSet(self.tokenize(title)))
+            target_lst = (self.tokenize(title))
 
             # 修复分词结果
             target_lst = self.repair_fenci(target_lst)
@@ -39,7 +38,7 @@ class Biaozhu():
             # 合并相邻的区间
             spans = self.merge_adjoint_span(spans)
             if len(spans) == 0:
-                logger.info(f"没有达到阈值：\n Title:\n{title}\n abstract{abstract}")
+                # logger.info(f"没有达到阈值：\n Title:\n{title}\n abstract{abstract}")
                 continue
             label_lst = self.biaozhu(abstract, spans)
 
@@ -52,18 +51,24 @@ class Biaozhu():
         logger.info(f"写入文件总共有{len(ans)}条。。")
         return ans
 
-
     def search_targetlist_in_string(self, s: str, target_lst: List[str], yuzhi: int, zuobiyoukai: bool):
         if not (isinstance(s, str) and isinstance(target_lst, list)):
             raise Exception
+        if len(s) == 0:
+            return []
         ans = []
+        pre = 0
         for t in target_lst:
-            if t not in s:
+            if t not in s[pre:]:
                 continue
+            index = s[pre:].index(t)
             if zuobiyoukai:
-                ans.append([s.index(t), s.index(t) +  len(t)])
+                ans.append([pre + index, pre + index + len(t)])
             else:
-                ans.append([s.index(t), s.index(t) + len(t) - 1])
+                ans.append([pre + index, pre + index + len(t) - 1])
+            pre = index
+
+        # 不满足阈值的就返回为空
         if len(ans) >= yuzhi:
             return ans
         else:

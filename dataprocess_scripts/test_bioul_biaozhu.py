@@ -33,8 +33,14 @@ class Test_bioul(TestCase):
         fenci = ["圆通","速递","：","20.38","亿股","限售","股","9","月","30","日","上市","流通","占","总","股本","71%"]
         self.assertListEqual(self.obj.search_targetlist_in_string(abstract, fenci, 1, False),
                              [[0, 1], [2, 3], [22, 26], [27, 28], [29, 30], [28, 28], [12, 12], [13, 13], [36, 37],
-                              [16, 16], [39, 40], [41, 42], [44, 44], [47, 47], [48, 49]])
+                              [38, 38], [39, 40], [41, 42], [44, 44], [47, 47], [48, 49]])
 
+    def test_search_targetlist_in_string_with_duplicate_word(self):
+        s = "安装步骤在官方安装上很清楚"
+        target_lst = ["安装", "在", "安装", "清楚"]
+        self.assertListEqual(self.obj.search_targetlist_in_string(s, target_lst, 0, False),
+                             [[0, 1], [4, 4], [7, 8], [11, 12]]
+                             )
 
     def test_tokenize(self):
         title = "圆通速递：20.38亿股限售股9月30日上市流通占总股本71%"
