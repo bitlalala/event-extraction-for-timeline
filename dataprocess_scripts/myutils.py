@@ -49,6 +49,31 @@ def search_targetlist_in_string(string: str, target_lst: List, zuo_bi_you_kai = 
         else:
             yield [string.index(target), len(target) - 1]
 
+def show_extract_info(dct_list: List[Dict]):
+    for dct in dct_list:
+        for a, b in zip(dct['abstract'], dct["labels"]):
+            if not b.startswith('O'):
+                print(a, end="")
+        print()
+
+def _show(dct):
+    for a, b in zip(dct['abstract'], dct["labels"]):
+        if not b.startswith('O'):
+            print(a, end="")
+
+def compare_2_dct_lst(a, b):
+    for i in range(len(a)):
+        for j in range(len(b)):
+            if a[i]['abstract'] == b[j]['abstract']:
+                print('|', end='')
+                _show(a[i])
+                print('|', end='')
+                _show(b[j])
+                print('|', end='')
+                print()
+
+
+
 
 
 

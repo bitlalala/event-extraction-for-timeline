@@ -49,6 +49,7 @@ class bioul_biaozhu_jieba(bioul_biaozhu):
     def tokenize(self, source: str):
         return list(jieba.cut_for_search(source))
 
+
 class bioul_biaozhu_pkuseg(bioul_biaozhu):
     def __init__(self, pth: str, yuzhi_ratio: float):
         super(bioul_biaozhu_pkuseg, self).__init__(pth, yuzhi_ratio)
@@ -59,8 +60,8 @@ class bioul_biaozhu_pkuseg(bioul_biaozhu):
 
 if __name__ == '__main__':
     pth = '../data/news_data_09_29.json'
-    # a = bioul_biaozhu_jieba(pth, 0.7)
-    # a.run('./jieba.json')
+    a = bioul_biaozhu_jieba(pth, 0.7)
+    a.run('./jieba.json')
 
-    b= bioul_biaozhu_pkuseg(pth, 0.7)
-    b.run('./pkuseg.json')
+    # b= bioul_biaozhu_pkuseg(pth, 0.7)
+    # b.run('./pkuseg.json')
