@@ -32,7 +32,12 @@ class Biaozhu():
             abstract = dct['abstract'].strip()
             title = dct['title'].strip()
             target_lst = list(OrderedSet(self.tokenize(title)))
+
+            # 修复分词结果
+            target_lst = self.repair_fenci(target_lst)
             spans = self.search_targetlist_in_string(abstract, target_lst, yuzhi= int(len(target_lst) * self.yuzhi_ratio), zuobiyoukai=False)
+            # 合并相邻的区间
+            spans = self.merge_adjoint_span(spans)
             if len(spans) == 0:
                 logger.info(f"没有达到阈值：\n Title:\n{title}\n abstract{abstract}")
                 continue
@@ -67,3 +72,20 @@ class Biaozhu():
     def tokenize(self, source: str) -> List[str]:
         raise NotImplementedError
 
+    def repair_fenci(self, word_list):
+        return word_list
+
+    def merge_adjoint_span(self, spans):
+        ans = []
+        for span in spans:
+            if len(ans) == 0:
+                ans.append(span)
+            else:
+                last = ans[-1][-1]
+                cur_start = span[0]
+                cur_last = span[1]
+                if cur_start - last == 1:
+                    ans[-1][-1] = cur_last
+                else:
+                    ans.append(span)
+        return ans
