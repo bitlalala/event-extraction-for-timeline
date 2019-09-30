@@ -12,7 +12,7 @@ import collections
 from typing import List, Dict, Tuple
 import logging
 
-from dataprocess_scripts.bioul_biaozhu import bioul_biaozhu
+from dataprocess_scripts.bioul_biaozhu import bioul_biaozhu_jieba
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -22,7 +22,7 @@ from unittest import TestCase
 
 class Test_bioul(TestCase):
     def setUp(self):
-        self.obj = bioul_biaozhu('../data/news_data_09_29.json', 0.7)
+        self.obj = bioul_biaozhu_jieba('../data/news_data_09_29.json', 0.7)
 
 
 

@@ -4,8 +4,10 @@
 @Email:  :11849322@mail.sustech.edu.cn
 """
 import json
+import pkuseg
 
 import jieba
+
 from tqdm import tqdm
 import random
 from pprint import pprint
@@ -30,7 +32,8 @@ class bioul_biaozhu(Biaozhu):
             a, b = span
             # 因为是左闭右开
             if a == b:
-                label_lst[a] = 'U-None'
+                if label_lst[a] == 'O':
+                    label_lst[a] = 'U-None'
             else:
                 for i in range(a, b + 1):
                     if i == a:
@@ -41,9 +44,23 @@ class bioul_biaozhu(Biaozhu):
                         label_lst[i] = 'I-None'
         return label_lst
 
+# 结巴分词器
+class bioul_biaozhu_jieba(bioul_biaozhu):
     def tokenize(self, source: str):
-        return jieba.lcut(source)
+        return list(jieba.cut_for_search(source))
+
+class bioul_biaozhu_pkuseg(bioul_biaozhu):
+    def __init__(self, pth: str, yuzhi_ratio: float):
+        super(bioul_biaozhu_pkuseg, self).__init__(pth, yuzhi_ratio)
+        self.tokenizer =  pkuseg.pkuseg(model_name='news')
+    def tokenize(self, source: str):
+        return self.tokenizer.cut(source)
+
 
 if __name__ == '__main__':
-    a = bioul_biaozhu('../data/news_data_09_29.json', 0.7)
-    a.run('./temp.json')
+    pth = '../data/news_data_09_29.json'
+    # a = bioul_biaozhu_jieba(pth, 0.7)
+    # a.run('./jieba.json')
+
+    b= bioul_biaozhu_pkuseg(pth, 0.7)
+    b.run('./pkuseg.json')

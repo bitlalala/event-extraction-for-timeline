@@ -11,7 +11,7 @@ import os
 import collections
 from typing import List, Dict, Tuple
 import logging
-
+from orderedset import OrderedSet
 from dataprocess_scripts.myutils import get_dct_from_file
 
 logger = logging.getLogger(__name__)
@@ -31,7 +31,7 @@ class Biaozhu():
         for dct in tqdm(get_dct_from_file(self.pth), desc="打标签中~  "):
             abstract = dct['abstract'].strip()
             title = dct['title'].strip()
-            target_lst = self.tokenize(title)
+            target_lst = list(OrderedSet(self.tokenize(title)))
             spans = self.search_targetlist_in_string(abstract, target_lst, yuzhi= int(len(target_lst) * self.yuzhi_ratio), zuobiyoukai=False)
             if len(spans) == 0:
                 logger.info(f"没有达到阈值：\n Title:\n{title}\n abstract{abstract}")
@@ -44,6 +44,7 @@ class Biaozhu():
             logger.debug("写文件中。。。")
             with open(write_file, 'w', encoding='utf-8') as f:
                 json.dump(ans, f, ensure_ascii=False, indent=2)
+        logger.info(f"写入文件总共有{len(ans)}条。。")
         return ans
 
 
