@@ -35,6 +35,7 @@ class Biaozhu():
             # 修复分词结果
             target_lst = self.repair_fenci(target_lst)
             spans = self.search_targetlist_in_string(abstract, target_lst, yuzhi= int(len(target_lst) * self.yuzhi_ratio), zuobiyoukai=False)
+            spans = sorted(spans, key=lambda x: x[0])
             # 合并相邻的区间
             spans = self.merge_adjoint_span(spans)
             if len(spans) == 0:
@@ -89,7 +90,10 @@ class Biaozhu():
                 last = ans[-1][-1]
                 cur_start = span[0]
                 cur_last = span[1]
-                if cur_start - last == 1:
+                # 当发生嵌套的时候
+                if cur_start <= last and cur_last <= last:
+                    continue
+                if cur_start - last == 1 or (cur_start <= last and cur_last >= last):
                     ans[-1][-1] = cur_last
                 else:
                     ans.append(span)

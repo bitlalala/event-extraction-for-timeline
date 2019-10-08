@@ -18,9 +18,12 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(level
 
 def get_dct_from_file(pth: str):
     "得到数据"
-    with open(pth) as f:
-        for line in f.readlines():
-            yield json.loads(line)
+    if isinstance(pth, dict):
+        yield pth
+    else:
+        with open(pth) as f:
+            for line in f.readlines():
+                yield json.loads(line)
 
 
 flag = True
