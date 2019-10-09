@@ -17,7 +17,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(level
 
 
 if __name__ == '__main__':
-    file_pth = '/home/liangjiaxi/TMP_PROJECT/pingan_event_extraction/dataprocess_scripts/pkuseg_0.9.json'
+    file_pth = '/home/liangjiaxi/TMP_PROJECT/pingan_event_extraction/dataprocess_scripts/pkuseg_0_7.json'
     with open(file_pth) as f:
         data = json.load(f)
     random.shuffle(data)

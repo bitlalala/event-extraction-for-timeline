@@ -50,7 +50,8 @@ class bistm_crf_predictor(Predictor):
         instance = self._dataset_reader.text_to_instance(line)
         ouput_dict = self.predict_instance(instance)
 
-        return {'predict_title': ouput_dict['predict_title']}
+        # return {'predict_title': ouput_dict['predict_title']}
+        return {'input': line, 'predict_title': ouput_dict['predict_title']}
 
 
 if __name__ == '__main__':

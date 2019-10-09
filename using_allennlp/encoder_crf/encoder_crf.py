@@ -120,7 +120,7 @@ class Encoder_crf(Model):
             if not self.training:
                 decode_data: Dict = self.decode(output)
                 if len(decode_data) != 0:
-                    print(f" \033[1;35m {''.join(list(decode_data.items())[0])}\033[0m")
+                    print(f" \033[1;35m {list(decode_data.items())[0]}\033[0m")
         # 测试阶段
         else:
             output['predict_title'] = [self.decode(output), ]

@@ -62,16 +62,16 @@ class bioul_biaozhu_pkuseg(bioul_biaozhu):
 if __name__ == '__main__':
     pth = '../data/news_data_09_29.json'
     a = bioul_biaozhu_jieba(pth, 0.7)
-    a.run('./jieba_0.7.json')
+    a.run('./jieba_0_7.json')
 
     b= bioul_biaozhu_pkuseg(pth, 0.7)
-    b.run('./pkuseg_0.7.json')
+    b.run('./pkuseg_0_7.json')
 
     a = bioul_biaozhu_jieba(pth, 0.9)
-    a.run('./jieba_0.9.json')
+    a.run('./jieba_0_9.json')
 
     b= bioul_biaozhu_pkuseg(pth, 0.9)
-    b.run('./pkuseg_0.9.json')
+    b.run('./pkuseg_0_9.json')
 
     a = bioul_biaozhu_jieba(pth, 1)
     a.run('./jieba_1.json')
