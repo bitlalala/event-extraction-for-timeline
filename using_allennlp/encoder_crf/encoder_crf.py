@@ -118,10 +118,12 @@ class Encoder_crf(Model):
 
             # 如果验证阶段，我们还想看一下解码后的效果
             if not self.training:
-                decode_data = self.decode(output)
+                decode_data: Dict = self.decode(output)
                 if len(decode_data) != 0:
-                    print(f" \033[1;35m {''.join(decode_data[0])}\033[0m")
-
+                    print(f" \033[1;35m {''.join(list(decode_data.items())[0])}\033[0m")
+        # 测试阶段
+        else:
+            output['predict_title'] = [self.decode(output), ]
         return output
 
     @overrides
@@ -134,7 +136,8 @@ class Encoder_crf(Model):
             ret.append(t)
         # print(f'\033[1;33;44m{ret[0]}\033[0m')
 
-        ans = []
+        ans = {'text': [], 'predict_title': []}
+
         for batch_index, (text, tags) in enumerate(zip(output_dict['metadata'], ret)):
             i = 0
             t = ''
@@ -150,8 +153,9 @@ class Encoder_crf(Model):
                             j += 1
                         t += "".join([str(w) for w in text[i: j+1]])
                 i += 1
+            ans['text'].append("".join(w.text for w in text))
+            ans['predict_title'].append(t)
 
-            ans.append(t)
         return ans
 
     @overrides

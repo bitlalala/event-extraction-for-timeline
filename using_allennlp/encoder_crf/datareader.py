@@ -56,11 +56,12 @@ class zhaiyao_datareader(DatasetReader):
         # 以字为单位
         abstract = [Token(w) for w in abstract]
         abstract_field = TextField(abstract, self._token_indexers)
-        fields = {'abstract': abstract_field}
+        meta_field = MetadataField(abstract)
+        fields = {'abstract': abstract_field, 'metadata': meta_field}
         if labels:
             labels_field = SequenceLabelField(labels, abstract_field)
-            meta_field = MetadataField(abstract)
-            t = {'labels': labels_field, 'metadata': meta_field}
+
+            t = {'labels': labels_field}
             fields.update(t)
 
         return Instance(fields)
