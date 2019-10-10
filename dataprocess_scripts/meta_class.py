@@ -30,12 +30,13 @@ class Biaozhu():
         for dct in tqdm(get_dct_from_file(self.pth), desc="打标签中~  "):
             abstract = dct['abstract'].strip()
             title = dct['title'].strip()
-            target_lst = (self.tokenize(title))
+            target_lst = self.tokenize(title, abstract)
 
             # 修复分词结果
             target_lst = self.repair_fenci(target_lst)
-            spans = self.search_targetlist_in_string(abstract, target_lst, yuzhi= int(len(target_lst) * self.yuzhi_ratio), zuobiyoukai=False)
-            spans = sorted(spans, key=lambda x: x[0])
+            _spans = self.search_targetlist_in_string(abstract, target_lst, yuzhi= int(len(title) * self.yuzhi_ratio), zuobiyoukai=False)
+            # print(_spans)
+            spans = sorted(_spans, key=lambda x: x[0])
             # 合并相邻的区间
             spans = self.merge_adjoint_span(spans)
             if len(spans) == 0:
@@ -52,7 +53,7 @@ class Biaozhu():
         logger.info(f"写入文件总共有{len(ans)}条。。")
         return ans
 
-    def search_targetlist_in_string(self, s: str, target_lst: List[str], yuzhi: int, zuobiyoukai: bool):
+    def search_targetlist_in_string(self, s: str, target_lst: List[str], yuzhi: int, zuobiyoukai: bool) -> List[List[int]]:
         if not (isinstance(s, str) and isinstance(target_lst, list)):
             raise Exception
         if len(s) == 0:
@@ -75,7 +76,7 @@ class Biaozhu():
         else:
             return []
 
-    def tokenize(self, source: str) -> List[str]:
+    def tokenize(self, source: str, abstract = None) -> List[str]:
         raise NotImplementedError
 
     def repair_fenci(self, word_list):
