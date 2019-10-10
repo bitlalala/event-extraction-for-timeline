@@ -3,9 +3,9 @@
     "type": "zhaiyao_datareader"
 
   },
-  "train_data_path": "/home/liangjiaxi/TMP_PROJECT/pingan_event_extraction/using_allennlp/data/pkuseg_0_train.json",
-  "validation_data_path": "/home/liangjiaxi/TMP_PROJECT/pingan_event_extraction/using_allennlp/data/pkuseg_0_dev.json",
-  "test_data_path": "/home/liangjiaxi/TMP_PROJECT/pingan_event_extraction/using_allennlp/data/pkuseg_0_test.json",
+  "train_data_path": "/home/liangjiaxi/TMP_PROJECT/pingan_event_extraction/using_allennlp/data/pkuseg_0_7_train.json",
+  "validation_data_path": "/home/liangjiaxi/TMP_PROJECT/pingan_event_extraction/using_allennlp/data/pkuseg_0_7_dev.json",
+  "test_data_path": "/home/liangjiaxi/TMP_PROJECT/pingan_event_extraction/using_allennlp/data/pkuseg_0_7_test.json",
   "evaluate_on_test": true,
   "model": {
     "type": "encoder_and_crf",

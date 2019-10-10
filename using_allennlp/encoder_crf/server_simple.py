@@ -32,19 +32,6 @@ from allennlp.common.util import import_submodules
 from allennlp.models.archival import load_archive
 from allennlp.predictors import Predictor
 
-
-"""
-python ./using_allennlp/encoder_crf/server_simple.py \
---port 6006 \
---archive-path  /home/liangjiaxi/TMP_PROJECT/pingan_event_extraction/tmp/debugger_train/model.tar.gz \
---predictor  bistm_crf_predictor \
---include-package  using_allennlp  \
---field-name abstract 
-"""
-
-
-
-
 logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
 
 class ServerError(Exception):
@@ -721,7 +708,7 @@ h1 {
 
 .pane__right {
   width: 100%;
-  overflow: auto;
+  overflow: visible;
   height: auto;
   min-height: 100%
 }

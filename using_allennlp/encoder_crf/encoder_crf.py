@@ -23,6 +23,7 @@ from allennlp.training.metrics import CategoricalAccuracy, SpanBasedF1Measure
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
+
 @Model.register("encoder_and_crf", exist_ok=True)
 class Encoder_crf(Model):
     def __init__(self, vocab: Vocabulary,
@@ -120,7 +121,7 @@ class Encoder_crf(Model):
             if not self.training:
                 decode_data: Dict = self.decode(output)
                 if len(decode_data) != 0:
-                    print(f" \033[1;35m {list(decode_data.items())[0]}\033[0m")
+                    print(f" \033[1;35m {list(decode_data.items())[1]}\033[0m")
         # 测试阶段
         else:
             output['predict_title'] = [self.decode(output), ]
